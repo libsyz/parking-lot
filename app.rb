@@ -1,48 +1,26 @@
-require_relative 'parking_lot'
+require_relative 'validator'
+require_relative 'request'
 
-class Intercom
-  def initialize
-    @parking_lot = ParkingLot.new
-    welcome
-    show_menu
+validator = Validator.new
+
+help_text = "We got an error!"
+
+loop do
+  print ">>> "
+  input = gets.chomp
+  clean_input = validator.validate(input)
+  request = Request.new(clean_input)
+
+  if request.is_entry?
+    EntriesController.process(request)
+  elsif request.is_exit?
+    ExitsControllers.process(request)
   end
 
-  def welcome
-    puts "###################"
-    puts "Welcome to the Parking Management System"
-    puts "###################"
-  end
-
-  def show_menu
-    puts "What would you like to do?"
-    puts "1. Check In a Vehicle"
-    puts "2. Check Out A Vehicle"
-    print ">"
-    @input = gets.chomp
-    route
-  end
-
-  def route
-    case @input
-    when "1"
-      vehicle = get_vehicle_details
-      @parking_lot.checkin(vehicle)
-    when "2"
-      puts "car leaving!"
-      vehicle = get_vehicle_details
-      @parking_lot.checkout(vehicle)
-    else
-      puts "Sorry option is not valid"
-      show_menu
-    end
-  end
-
-  def get_vehicle_details
-    # ask the use for details
-    # validate the input - Should complain and call menu if does not work
-    # return the input
-  end
+rescue
+  puts "Entry: \n
+        type 'ENTRY {Your Plate number} {your vehicle type (car, motorbike, truck or bus)}' \n
+        Exit:
+        type 'EXIT {Your Plate number}'' \n"
 end
-
-intercom = Intercom.new
 

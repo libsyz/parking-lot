@@ -39,6 +39,6 @@ Output: $LEVEL_NUMBER $SPOT_NUMBER is now available
 
 ### Parking Problem
 
--
+
 
 ### Assumptions
