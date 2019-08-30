@@ -5,10 +5,8 @@ class Validator
 
   def validate(input)
     @input = input.strip.split(" ")
-    if entry_input?
-
-    elsif exit_input?
-
+    if entry_input? || exit_input?
+      request_params
     else
       input_invalid
     end
@@ -16,37 +14,27 @@ class Validator
 
   def entry_input?
     @input.size == 3 &&
-    @input.first == "ENTRY" &&
-    VEHICLES.any? {|el| el == @input.second } &&
-    @input.third =~ PLATE_REGEXP
+    @input[0] == "ENTRY" &&
+    @input[1] =~ PLATE_REGEXP &&
+    VEHICLES.any? {|el| el == @input[2] }
   end
 
   def exit_input?
-    false
+    @input.size == 2 &&
+    @input.first == "EXIT" &&
+    @input[1] =~ PLATE_REGEXP
   end
 
-  def exit_params?
-    @params.size == 2 &&
-    @params.first == "EXIT" &&
-    @params.second =~ PLATE_REGEXP
-  end
-
-  def entry_params
-    if input.first == "ENTRY"
-      {
-        action: @input.first,
-        plate: @input.find,
-        vehicle: @input.third
-      }
-    elsif
-      {
-        action: @input.first,
-        plate: @input.second
-      }
-    end
-  end
   def input_invalid
     puts "Sorry, I could not make sense of your input!"
+  end
+
+  def request_params
+    {
+      action: @input[0],
+      plate: @input.find(PLATE_REGEXP),
+      vehicle: @input.find(PLATE_REGEXP)
+    }
   end
 
 end

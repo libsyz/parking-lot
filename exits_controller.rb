@@ -1,0 +1,2 @@
+class ExitsController
+end
