@@ -32,8 +32,8 @@ class Validator
   def request_params
     {
       action: @input[0],
-      plate: @input.find(PLATE_REGEXP),
-      vehicle: @input.find(PLATE_REGEXP)
+      vehicle: @input.find { |el| el == VEHICLES },
+      plate: @input.find { |el| el == PLATE_REGEXP }
     }
   end
 

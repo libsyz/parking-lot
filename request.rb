@@ -1,5 +1,5 @@
 class Request
-  attr_reader :action, :vehicle, :plate
+attr_reader :action, :vehicle, :plate
 
   def initialize(params = {})
     @action = params[:action]

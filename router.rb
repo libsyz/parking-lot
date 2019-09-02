@@ -1,4 +1,6 @@
 
+
+
 class Router
   def initialize(entries_controller, exits_controller)
     @entries_controller = entries_controller
@@ -6,11 +8,12 @@ class Router
   end
 
   def handle(request)
-    puts "at least I got here"
     if request.is_entry?
-      puts "Processing entry my man"
+      response = @entries_controller.process(request)
+      puts response
     elsif request.is_exit?
-      puts "Processing Exit my man"
+      response = @exits_controller.process(request)
+      puts response
     else
       puts "Sorry! something went terribly wrong!"
     end
