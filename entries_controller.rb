@@ -1,10 +1,11 @@
 require 'csv'
 
 class EntriesController
-  def initialize
+  def initialize(parking_lot)
     @registry = "./registry.csv"
-    @parking = ParkingLot.new
+    @parking = parking_lot
   end
+
   def process(request)
     @request = request
     parking.space_available?(request) ? parking : no_spots_left

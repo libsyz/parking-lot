@@ -1,16 +1,15 @@
+require_relative 'parking_lot'
+require_relative 'floor'
+require_relative 'lot'
 require_relative 'validator'
 require_relative 'request'
 require_relative 'router'
 require_relative 'entries_controller'
-require_relative 'parking_lot'
-require_relative 'floor'
-require_relative 'lot'
+require_relative 'exits_controller'
+require 'pry-byebug'
 
 
-validator = Validator.new
-parking_lot = ParkingLot.new
-# entries_controller = EntriesController.new(parking_lot)
-# exits_controller = ExitsController.new
+# Generate floors and lots
 
 floor_first = Floor.new({vehicles_allowed: ["truck", "bus"], max_lots: 15})
 floor_second = Floor.new({vehicles_allowed: ["motorbike", "car"], max_lots: 15})
@@ -18,27 +17,43 @@ floor_third = Floor.new({vehicles_allowed: ["motorbike", "car"], max_lots: 15})
 
 all_floors = [floor_first, floor_second, floor_third]
 
-counter = 0
+distance_from_entry = 0
 all_floors.each do |floor|
   floor.max_lots.times do
-    floor.lots << Lot.new(counter)
-    counter += 1
+    floor.lots << Lot.new(distance_from_entry)
+    distance_from_entry += 1
   end
 end
 
-# router = Router.new(entries_controller, exits_controller)
+# Generate Parking
+parking_lot = ParkingLot.new(all_floors)
 
-# help_text =
-#             "Entry:
-#             type 'ENTRY {Your Plate number} {your vehicle type (car, motorbike, truck or bus)}'
-#             Exit:
-#             type 'EXIT {Your Plate number}'"
+# Generate routers and handlers
 
-# loop do
-#   print ">>> "
-#   input = gets.chomp
-#   clean_input = validator.validate(input)
-#   request = Request.new(clean_input)
-#   router.handle(request)
-# end
+entries_controller = EntriesController.new(parking_lot)
+exits_controller = ExitsController.new
+router = Router.new(entries_controller, exits_controller)
+
+validator = Validator.new
+
+
+help_text = <<-EOF
+Entry:
+type 'ENTRY {Your Plate number} {your vehicle type (car, motorbike, truck or bus)}'
+Exit:
+type 'EXIT {Your Plate number}'"
+            EOF
+
+loop do
+  print ">>> "
+  input = gets.chomp
+  clean_input = validator.validate(input)
+  #binding.pry
+  if clean_input
+    request = Request.new(clean_input)
+    router.handle(request)
+  else
+    puts help_text
+  end
+end
 
