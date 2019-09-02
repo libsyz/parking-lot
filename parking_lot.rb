@@ -1,18 +1,13 @@
 
 class ParkingLot
+  attr_reader :floors
   def initialize(floors = [])
-    @floors = []
+    @floors = floors
   end
 
   def space_available?(request)
-
-    # return false if all spots are taken
-    # If the request is for a large vehicle,
-      # assign to the closest to entry spot - first floor
-    # If the request is for a small vehicle
-      # assign to the closes to entry spot - second and third floor
-
-    # If the assignment has happened, write to CSV file
+    compatible_floors = floors.select {|f| f.vehicles_allowed.include? request.vehicle }
+    compatible_floors.any? { |f| f.space_available? }
   end
 
 

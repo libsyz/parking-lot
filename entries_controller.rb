@@ -7,8 +7,9 @@ class EntriesController
   end
 
   def process(request)
+    binding.pry
     @request = request
-    parking.space_available?(request) ? parking : no_spots_left
+    @parking.space_available?(request) ? "Ready to store vehicle" : no_spots_left
   end
 
   def store

@@ -24,6 +24,7 @@ all_floors.each do |floor|
     distance_from_entry += 1
   end
 end
+binding.pry
 
 # Generate Parking
 parking_lot = ParkingLot.new(all_floors)
@@ -37,12 +38,21 @@ router = Router.new(entries_controller, exits_controller)
 validator = Validator.new
 
 
+welcome_text = <<-EOF
+**********************************
+Welcome to your parking administration app, Carl
+**********************************
+            EOF
+
+
 help_text = <<-EOF
 Entry:
 type 'ENTRY {Your Plate number} {your vehicle type (car, motorbike, truck or bus)}'
 Exit:
 type 'EXIT {Your Plate number}'"
             EOF
+
+puts welcome_text
 
 loop do
   print ">>> "
