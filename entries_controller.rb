@@ -3,16 +3,23 @@ require 'csv'
 class EntriesController
   def initialize
     @registry = "./registry.csv"
+    @parking = ParkingLot.new
   end
   def process(request)
-    CSV.open(@registry, "wb") do |csv|
-      puts request
-      csv << [request.action, request.plate, request.vehicle]
+    @request = request
+    if parking.space_available?(request) parking : no_spots_left
+  end
 
-    ## Discern what kind of car is it
-    ## If there is space for this kind of car
-    ## Store it with a timestamp and return a message
+  def store
+    CSV.open(@registry, "wb") do |csv|
+      puts @request
+      csv << [request.action, request.plate, request.vehicle]
     end
-    puts "#{request} entered successfully"
+    puts "#{@request} entered successfully"
+  end
+
+
+  def no_spots_left
+    "Sorry! There are no spaces left"
   end
 end

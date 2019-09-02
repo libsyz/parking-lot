@@ -5,7 +5,8 @@ require_relative 'entries_controller'
 require_relative 'exits_controller'
 
 validator = Validator.new
-entries_controller = EntriesController.new
+parking_lot = ParkingLot.new
+entries_controller = EntriesController.new(parking_lot)
 exits_controller = ExitsController.new
 
 router = Router.new(entries_controller, exits_controller)
