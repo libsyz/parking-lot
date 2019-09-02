@@ -7,7 +7,7 @@ class EntriesController
   end
   def process(request)
     @request = request
-    if parking.space_available?(request) parking : no_spots_left
+    parking.space_available?(request) ? parking : no_spots_left
   end
 
   def store
