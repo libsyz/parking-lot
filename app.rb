@@ -60,7 +60,6 @@ loop do
   print ">>> "
   input = gets.chomp
   clean_input = validator.validate(input)
-  #binding.pry
   if clean_input
     request = Request.new(clean_input)
     router.handle(request)
