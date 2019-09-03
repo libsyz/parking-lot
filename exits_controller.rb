@@ -9,9 +9,8 @@ class ExitsController
   def process(request)
     if @parking.holds?(request)
       @parking.release_lot(request)
-      "vehicle number #{request.plate} has exited the parking!"
     else
-      "Sorry, this vehicle does not seem to be in the parking"
+      @parking.not_found
     end
   end
 end

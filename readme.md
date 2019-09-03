@@ -45,3 +45,16 @@ Output: $LEVEL_NUMBER $SPOT_NUMBER is now available
 
 
 ### Assumptions
+
+- The application should have persistance system in place
+- The number of floors is not likely to change in the future
+- The parking should only allow Singaporean plates (AA11AA1111)
+- All vehicles in the parking must have unique plate numbers
+- You cannot check out a vehicle that has not gotten in first
+-
+
+
+### Specs
+[X]- As Carles, I can check in a vehicle in a spot
+[X]- As Carles, I can retrieve all spot related information after system shutdown
+[X]- As Carles, I can check out a vehicle

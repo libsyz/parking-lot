@@ -17,21 +17,22 @@ class ParkingLot
     all_busy_lots.any? {|lot| lot.plate == request.plate }
   end
 
-
   def store(request)
     floors = compatible_floors.find {|f| f.space_available? }
     lot = floors.lots.find {|l| l.free? }
     lot.hold(request.plate)
     save_to_csv
-    "#{request.vehicle} - plate: #{request.plate} is now stored at lot #{lot.distance_from_entry}"
+    "plate: #{request.plate} Please proceed to spot #{lot.distance_from_entry}, floor number #{lot.floor.number}"
   end
-
 
   def release_lot(request)
     all_busy_lots.each do |lot|
-      lot.release if lot.plate == request.plate
+      if lot.plate == request.plate
+        lot.release
+        save_to_csv
+        return "Spot #{lot.distance_from_entry} in Floor #{lot.floor.number} is now free"
+      end
     end
-    save_to_csv
   end
 
   def load_csv
@@ -40,6 +41,15 @@ class ParkingLot
       lot = all_lots.flatten.find {|lot| lot.distance_from_entry == row[0].to_i}
       lot.hold(row[1])
     end
+  end
+
+
+  def no_spots_left
+    "Sorry! There are no spaces left - Check out a bus to continue"
+  end
+
+  def not_found
+    "Sorry, this vehicle does not seem to be checked in"
   end
 
   private
@@ -61,7 +71,7 @@ class ParkingLot
   def save_to_csv
     CSV.open(@csv_file, 'wb') do |csv|
       all_busy_lots.each do |lot|
-        csv << [lot.plate, lot.distance_from_entry]
+        csv << [lot.distance_from_entry, lot.plate]
       end
     end
   end

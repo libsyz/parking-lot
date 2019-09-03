@@ -9,10 +9,7 @@ class EntriesController
   def process(request)
     binding.pry
     @request = request
-    @parking.space_available?(request) ? @parking.store(request) : no_spots_left
+    @parking.space_available?(request) ? @parking.store(request) : @parking.no_spots_left
   end
 
-  def no_spots_left
-    "Sorry! There are no spaces left - Check out a bus to continue"
-  end
 end
