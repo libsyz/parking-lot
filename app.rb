@@ -46,10 +46,12 @@ Welcome to your parking administration app, Carl
 
 
 help_text = <<-EOF
+**********************************
 Entry:
 type 'ENTRY {Your Plate number} {your vehicle type (car, motorbike, truck or bus)}'
 Exit:
 type 'EXIT {Your Plate number}'"
+**********************************
             EOF
 
 puts welcome_text
