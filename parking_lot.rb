@@ -34,6 +34,15 @@ class ParkingLot
     save_to_csv
   end
 
+  def load_csv
+    csv = CSV.parse(File.open(@csv_file))
+    csv.each do |row|
+      binding.pry
+      lot = all_lots.flatten.find {|lot| lot.distance_from_entry == row[0].to_i}
+      lot.hold(row[1])
+    end
+  end
+
   private
 
   def compatible_floors
@@ -46,6 +55,10 @@ class ParkingLot
     all.select {|lot| lot.free? == false }
   end
 
+  def all_lots
+    [] << floors.map {|floor| floor.lots }
+  end
+
   def save_to_csv
     CSV.open(@csv_file, 'wb') do |csv|
       all_busy_lots.each do |lot|
@@ -54,7 +67,6 @@ class ParkingLot
       end
     end
   end
-
-
 end
+
 

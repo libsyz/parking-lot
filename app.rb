@@ -24,11 +24,12 @@ all_floors.each do |floor|
     distance_from_entry += 1
   end
 end
-binding.pry
+
 
 # Generate Parking
 parking_lot = ParkingLot.new(all_floors)
-
+parking_lot.load_csv
+binding.pry
 # Generate routers and handlers
 
 entries_controller = EntriesController.new(parking_lot)
