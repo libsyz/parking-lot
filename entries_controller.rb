@@ -9,19 +9,11 @@ class EntriesController
   def process(request)
     binding.pry
     @request = request
-    @parking.space_available?(request) ? "Ready to store vehicle" : no_spots_left
-  end
-
-  def store
-    CSV.open(@registry, "wb") do |csv|
-      puts @request
-      csv << [request.action, request.plate, request.vehicle]
-    end
-    puts "#{@request} entered successfully"
+    @parking.space_available?(request) ? @parking.store(request) : no_spots_left
   end
 
 
   def no_spots_left
-    "Sorry! There are no spaces left"
+    "Sorry! There are no spaces left - Check out a #{@request.type} to continue"
   end
 end

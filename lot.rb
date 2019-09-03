@@ -1,6 +1,6 @@
 
 class Lot
-  attr_reader :plate
+  attr_reader :plate, :distance_from_entry
 
   def initialize(plate = nil, distance_from_entry)
     @plate = plate
