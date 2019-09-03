@@ -37,7 +37,6 @@ class ParkingLot
   def load_csv
     csv = CSV.parse(File.open(@csv_file))
     csv.each do |row|
-      binding.pry
       lot = all_lots.flatten.find {|lot| lot.distance_from_entry == row[0].to_i}
       lot.hold(row[1])
     end
@@ -62,7 +61,6 @@ class ParkingLot
   def save_to_csv
     CSV.open(@csv_file, 'wb') do |csv|
       all_busy_lots.each do |lot|
-        binding.pry
         csv << [lot.plate, lot.distance_from_entry]
       end
     end

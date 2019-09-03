@@ -12,8 +12,7 @@ class EntriesController
     @parking.space_available?(request) ? @parking.store(request) : no_spots_left
   end
 
-
   def no_spots_left
-    "Sorry! There are no spaces left - Check out a #{@request.type} to continue"
+    "Sorry! There are no spaces left - Check out a bus to continue"
   end
 end
