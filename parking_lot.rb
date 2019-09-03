@@ -13,10 +13,14 @@ class ParkingLot
     compatible_floors.any? { |f| f.space_available? }
   end
 
+  def holds?(request)
+    all_busy_lots.any? {|lot| lot.plate == request.plate }
+  end
+
 
   def store(request)
-    floor = compatible_floors.find {|f| f.space_available? }
-    lot = floor.lots.find {|l| l.free? }
+    floors = compatible_floors.find {|f| f.space_available? }
+    lot = floors.lots.find {|l| l.free? }
     lot.hold(request.plate)
     save_to_csv
     "#{request.vehicle} - plate: #{request.plate} is now stored at lot #{lot.distance_from_entry}"
