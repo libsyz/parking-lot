@@ -32,7 +32,7 @@ parking_lot = ParkingLot.new(all_floors)
 # Generate routers and handlers
 
 entries_controller = EntriesController.new(parking_lot)
-exits_controller = ExitsController.new
+exits_controller = ExitsController.new(parking_lot)
 router = Router.new(entries_controller, exits_controller)
 
 validator = Validator.new

@@ -22,19 +22,12 @@ class ParkingLot
     "#{request.vehicle} - plate: #{request.plate} is now stored at lot #{lot.distance_from_entry}"
   end
 
-  def save_to_csv
-    CSV.open(@csv_file, 'wb') do |csv|
-      all_busy_lots.each do |lot|
-        binding.pry
-        csv << [lot.plate, lot.distance_from_entry]
-      end
-    end
-  end
 
   def release_lot(request)
     all_busy_lots.each do |lot|
       lot.release if lot.plate == request.plate
     end
+    save_to_csv
   end
 
   private
@@ -47,6 +40,15 @@ class ParkingLot
     all = []
     floors.each {|f| all.concat(f.lots) }
     all.select {|lot| lot.free? == false }
+  end
+
+  def save_to_csv
+    CSV.open(@csv_file, 'wb') do |csv|
+      all_busy_lots.each do |lot|
+        binding.pry
+        csv << [lot.plate, lot.distance_from_entry]
+      end
+    end
   end
 
 
