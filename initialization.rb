@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'parking_lot'
 require_relative 'floor'
 require_relative 'lot'
@@ -14,9 +16,15 @@ require 'pry-byebug'
 
 # Generate floors and lots
 
-floor_first = Floor.new({vehicles_allowed: ["truck", "bus"], max_lots: 15, number: 1})
-floor_second = Floor.new({vehicles_allowed: ["motorbike", "car"], max_lots: 15, number: 2})
-floor_third = Floor.new({vehicles_allowed: ["motorbike", "car"], max_lots: 15, number: 3})
+floor_first = Floor.new(vehicles_allowed: %w[truck bus],
+                        max_lots: 15,
+                        number: 1)
+floor_second = Floor.new(vehicles_allowed: %w[motorbike car],
+                         max_lots: 15,
+                         number: 2)
+floor_third = Floor.new(vehicles_allowed: %w[motorbike car],
+                        max_lots: 15,
+                        number: 3)
 
 all_floors = [floor_first, floor_second, floor_third]
 
@@ -37,7 +45,6 @@ view = View.new
 entries_controller = EntriesController.new(parking_lot)
 exits_controller = ExitsController.new(parking_lot)
 router = Router.new(view, entries_controller, exits_controller)
-
 
 # Bundle the app and run
 app = App.new(router)

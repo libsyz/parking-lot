@@ -1,4 +1,5 @@
-
+# frozen_string_literal: true
+# handles logic for vehicle exits
 
 class ExitsController
   def initialize(parking_lot)
@@ -10,6 +11,6 @@ class ExitsController
   end
 
   def not_found
-    "This vehicle plate does not appear to be checked in"
+    'This vehicle plate does not appear to be checked in'
   end
 end

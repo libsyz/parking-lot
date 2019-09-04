@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 class Floor
   attr_accessor :lots
@@ -11,10 +12,10 @@ class Floor
   end
 
   def space_available?
-    lots.any? {|lot| lot.free? }
+    lots.any?(&:free?)
   end
 
   def full?
-    lots.all? {|lot| lot.free? == false }
+    lots.all? { |lot| lot.free? == false }
   end
 end

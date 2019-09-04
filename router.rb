@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+# Keeps the program running
+# and dispatches requests to controllers
+
 require_relative 'request'
 require_relative 'validator'
 
- class Router
+class Router
   include Validator
 
   def initialize(view, entries_controller, exits_controller)
@@ -27,17 +31,15 @@ require_relative 'validator'
     @view.welcome_message
   end
 
+  private
+
   def handle(request)
-    if request.is_entry?
+    if request.entry?
       response = @entries_controller.process(request)
       @view.display(response)
-    elsif request.is_exit?
+    elsif request.exit?
       response = @exits_controller.process(request)
       @view.display(response)
-    else
-      error = "Sorry! Something went wrong"
-      @view.display(error)
     end
   end
 end
-

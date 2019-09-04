@@ -1,5 +1,9 @@
+# frozen_string_literal: true
+# holds vehicle information
+# and route activation information
+
 class Request
-attr_reader :action, :vehicle, :plate
+  attr_reader :action, :vehicle, :plate
 
   def initialize(params = {})
     @action = params[:action]
@@ -7,12 +11,11 @@ attr_reader :action, :vehicle, :plate
     @plate = params[:plate]
   end
 
-  def is_entry?
-    @action == "ENTRY"
+  def entry?
+    @action == 'ENTRY'
   end
 
-  def is_exit?
-    @action == "EXIT"
+  def exit?
+    @action == 'EXIT'
   end
-
 end

@@ -1,4 +1,5 @@
-
+# frozen_string_literal: true
+# Bundles the router and initializes the app
 
 class App
   def initialize(router)
