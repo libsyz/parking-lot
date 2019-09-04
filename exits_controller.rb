@@ -1,16 +1,15 @@
 
 
 class ExitsController
-
   def initialize(parking_lot)
     @parking = parking_lot
   end
 
   def process(request)
-    if @parking.holds?(request)
-      @parking.release_lot(request)
-    else
-      @parking.not_found
-    end
+    @parking.holds?(request) ? @parking.release_lot(request) : not_found
+  end
+
+  def not_found
+    "This vehicle plate does not appear to be checked in"
   end
 end

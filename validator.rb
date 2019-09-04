@@ -1,5 +1,5 @@
 
-class Validator
+module Validator
   PLATE_REGEXP = /[A-Z]{2}\d{2}[A-Z]{4}/
   VEHICLES = ["car", "truck", "bus", "motorbike"]
 

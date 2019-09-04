@@ -7,7 +7,7 @@ class EntriesController
   end
 
   def process(request)
-    binding.pry
+    return "Vehicle plate already checked in the parking" if @parking.holds?(request)
     @request = request
     @parking.space_available?(request) ? @parking.store(request) : @parking.no_spots_left
   end

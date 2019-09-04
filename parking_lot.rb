@@ -9,6 +9,7 @@ class ParkingLot
   end
 
   def space_available?(request)
+    return false if holds?(request)
     @request = request
     compatible_floors.any? { |f| f.space_available? }
   end

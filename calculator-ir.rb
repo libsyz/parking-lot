@@ -16,6 +16,5 @@ class Goblin
   end
 end
 
-
 goblin = Goblin.new(Rock.new)
 
