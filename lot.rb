@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 # Lots are in floors - free updates whether a plate has been assigned or not
 
-
 class Lot
   attr_reader :plate, :distance_from_entry, :floor
 
