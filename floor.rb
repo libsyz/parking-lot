@@ -1,14 +1,16 @@
 # frozen_string_literal: true
+# Floor is part of the parking lot
+# Parking -> Floors -> Lots
 
 class Floor
-  attr_accessor :lots
-  attr_reader :max_lots, :vehicles_allowed, :number
+  attr_reader :capacity, :vehicle_types, :number, :lots
 
   def initialize(config = {})
     @lots = []
-    @vehicles_allowed = config[:vehicles_allowed]
-    @max_lots = config[:max_lots]
+    @vehicle_types = config[:vehicle_types]
+    @capacity = config[:capacity]
     @number = config[:number]
+    raise "capacity must be present on initialization params" unless capacity
   end
 
   def space_available?
@@ -16,6 +18,14 @@ class Floor
   end
 
   def full?
-    lots.all? { |lot| lot.free? == false }
+    lots.compact.count == capacity
+  end
+
+  def lots=(array)
+    if array.size <= capacity
+      @lots = array
+    else
+      raise "can't exceed the Floor's capacity"
+    end
   end
 end

@@ -34,7 +34,6 @@ class ParkingLot
   def release_lot(request)
     all_busy_lots.each do |lot|
       next unless lot.plate == request.plate
-
       lot.release
       save_to_csv
       return "Spot #{lot.distance_from_entry} in Floor #{lot.floor.number} is now free"
@@ -50,7 +49,6 @@ class ParkingLot
       lot.hold(row[1])
     end
   end
-
 
 
   def not_found
