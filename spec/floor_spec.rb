@@ -40,7 +40,6 @@ describe "Floor" do
     end
   end
 
-
   describe "#full?" do
     it "returns true when there are no lots available in the floor" do
       floor = Floor.new({capacity: 10})
