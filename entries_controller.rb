@@ -5,7 +5,6 @@ require 'csv'
 
 class EntriesController
   def initialize(parking_lot)
-    @registry = './registry.csv'
     @parking = parking_lot
   end
 
