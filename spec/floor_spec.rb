@@ -26,6 +26,13 @@ describe "Floor" do
       floor.lots = %w(1 2 3)
       expect(floor.lots).to eq %w(1 2 3)
     end
+
+    it "should behave like an array - for instance, allows use of #concat or #push" do
+      floor = Floor.new({capacity: 10})
+      floor.lots = %w(1 2 3)
+      expect(floor.lots).to respond_to(:concat)
+      expect(floor.lots).to respond_to(:push)
+    end
   end
 
   describe "#vehicle_types" do
