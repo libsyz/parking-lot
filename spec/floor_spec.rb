@@ -41,23 +41,37 @@ describe "Floor" do
   end
 
   describe "#full?" do
-    it "returns true when there are no lots available in the floor" do
+    it "returns true when there are all lots respond false to being free" do
       floor = Floor.new({capacity: 10})
-      floor.lots = Array.new(10) { |el| el = "Filling a lot" }
+      filled_lot = double("filled_lot")
+      allow(filled_lot).to receive(:free?).and_return(false)
+      floor.lots = Array.new(10) { |el| el = filled_lot }
       expect(floor.full?).to eq true
     end
 
-    it "returns false when lots are filled with nil values" do
+    it "returns false when at least one lot responds true to being available" do
       floor = Floor.new({capacity: 10})
-      floor.lots = Array.new(10) { |el| el = nil }
-      expect(floor.full?).to eq false
-    end
-
-    it "returns false when the amount of lots is lower than the capacity" do
-      floor = Floor.new({capacity: 10})
-      floor.lots = Array.new(8) { |el| el = nil }
+      filled_lot = double("filled_lot")
+      allow(filled_lot).to receive(:free?).and_return(false)
+      free_lot = double("free_lot")
+      allow(free_lot).to receive(:free?).and_return(true)
+      floor.lots = Array.new(9) { |el| el = filled_lot }
+      floor.lots << free_lot
       expect(floor.full?).to eq false
     end
   end
+
+  describe "#allows_vehicle?(arg)" do
+    it "returns true when the parameters are part of #vehicle_types" do
+      floor = Floor.new({capacity: 10, vehicle_types: %w(car motorbike)})
+      expect(floor.allows_vehicle?("car")).to be_truthy
+    end
+
+    it "returns false when the vehicle is not part of #vehicle_types" do
+      floor = Floor.new({capacity: 10, vehicle_types: %w(car motorbike)})
+      expect(floor.allows_vehicle?("bus")).to be_falsey
+    end
+  end
+
 end
 

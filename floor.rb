@@ -13,19 +13,20 @@ class Floor
     raise "capacity must be present on initialization params" unless capacity
   end
 
-  def space_available?
-    lots.any?(&:free?)
-  end
-
   def full?
-    lots.compact.count == capacity
+    lots.none?(&:free?)
   end
 
   def lots=(array)
     if array.size <= capacity
       @lots = array
     else
-      raise "can't exceed the Floor's capacity"
+      raise "can't exceed the Floor's capacity: #{capacity} units"
     end
   end
+
+  def allows_vehicle?(vehicle)
+    @vehicle_types.include?(vehicle)
+  end
+
 end
