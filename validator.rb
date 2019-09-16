@@ -14,6 +14,8 @@ module Validator
     end
   end
 
+  private
+
   def entry_input?
     @input.size == 3 &&
       @input[0] == 'ENTRY' &&
@@ -28,7 +30,7 @@ module Validator
   end
 
   def input_invalid
-    puts 'Sorry, I could not make sense of your input!'
+    'Sorry, I could not make sense of your input!'
   end
 
   def request_params
@@ -38,4 +40,5 @@ module Validator
       plate: @input.find { |el| el =~ PLATE_REGEXP }
     }
   end
+
 end
