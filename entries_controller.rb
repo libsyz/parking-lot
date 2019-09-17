@@ -10,12 +10,12 @@ class EntriesController
 
   def process(request)
     return duplicated_plate if @parking.holds?(request)
-    return no_spots_left unless @parking.space_available?
+    return no_spots_left unless @parking.space_available?(request)
     @parking.store(request)
   end
 
   def duplicated_plate
-    'Vehicle plate already checked in the parking'
+    'This vehicle has already been checked in the parking'
   end
 
   def no_spots_left
