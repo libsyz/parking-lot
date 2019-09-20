@@ -5,11 +5,11 @@
 require 'csv'
 
 class ParkingLot
-  attr_reader :floors
+  attr_reader :floors, :csv_file
 
-  def initialize(floors = [])
+  def initialize(floors = [], csv_file = nil)
     @floors = floors
-    @csv_file = './registry.csv'
+    @csv_file = csv_file || './registry.csv'
   end
 
   def space_available?(request)
